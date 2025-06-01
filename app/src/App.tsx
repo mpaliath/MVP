@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PickAdventure from "./components/PickAdventure";
 import RecommendedTrip from "./components/RecommendedTrip";
 import TripPlan from "./components/TripPlan";
