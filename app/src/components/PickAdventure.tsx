@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { AdventureCard } from "../types";
 
 export default function PickAdventure({
@@ -16,19 +17,21 @@ export default function PickAdventure({
   return (
     <>
       <h1 className="text-2xl font-bold mb-6">Pick Your Adventure</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
+      <div className="flex flex-wrap justify-center gap-6">
         {cards.map((c) => (
-          <div
+          <Card
             key={c.id}
-            className="bg-white rounded-2xl shadow overflow-hidden cursor-pointer"
+            className="cursor-pointer w-full max-w-xs"
             onClick={() => onPick(c)}
           >
-            <img src={c.image} alt={c.title} className="h-40 w-full object-cover" />
-            <div className="p-4">
-              <h2 className="font-semibold text-lg">{c.title}</h2>
-              <p className="text-gray-600 text-sm">{c.subtitle}</p>
-            </div>
-          </div>
+            <CardHeader>
+              <CardTitle>{c.title}</CardTitle>
+            </CardHeader>
+            <CardContent className="justify-between p-4">
+              <img src={c.image} alt={c.title} className="w-full aspect-square object-cover rounded-t-xl" />
+              <CardDescription>{c.subtitle}</CardDescription>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </>
