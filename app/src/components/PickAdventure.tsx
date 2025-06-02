@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { AdventureCard } from "../types";
+import CenteredLayout from "./CenteredLayout";
 
 export default function PickAdventure({
   onPick
@@ -15,9 +16,8 @@ export default function PickAdventure({
   }, []);
 
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-6">Pick Your Adventure</h1>
-      <div className="flex flex-wrap justify-center gap-6">
+    <CenteredLayout title="Pick Your Adventure">
+      <div className="flex-1 flex flex-wrap justify-center items-center gap-24 w-full">
         {cards.map((c) => (
           <Card
             key={c.id}
@@ -34,6 +34,6 @@ export default function PickAdventure({
           </Card>
         ))}
       </div>
-    </>
+    </CenteredLayout>
   );
 }

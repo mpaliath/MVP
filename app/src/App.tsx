@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
+import EditTripPlan from "./components/EditTripPlan";
 import PickAdventure from "./components/PickAdventure";
 import RecommendedTrip from "./components/RecommendedTrip";
 import TripPlan from "./components/TripPlan";
@@ -36,7 +37,7 @@ function RecommendRoute() {
       card={adventure}
       onRefresh={(newCard) => navigate(`/recommend/${newCard.id}`)}
       onChoose={(trip) => navigate(`/plan/${adventure.id}`, { state: { plan: trip } })}
-      onFineTune={(trip) => navigate(`/plan/${adventure.id}`, { state: { plan: trip } })}
+      onFineTune={(trip) => navigate(`/plan/${adventure.id}/edit`, { state: { plan: trip } })}
     />
   );
 }
@@ -47,6 +48,20 @@ function PlanRoute() {
   const plan = location.state?.plan as TripPlanType | undefined;
   if (!adventureId || !plan) return <Redirect to="/" />;
   return <TripPlan plan={plan} />;
+}
+
+function EditPlanRoute() {
+  const { adventureId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const plan = location.state?.plan as TripPlanType | undefined;
+  if (!adventureId || !plan) return <Redirect to="/" />;
+  return (
+    <EditTripPlan
+      plan={plan}
+      onSave={(updatedPlan) => navigate(`/plan/${adventureId}`, { state: { plan: updatedPlan } })}
+    />
+  );
 }
 
 function AppRoutes() {
@@ -64,6 +79,7 @@ function AppRoutes() {
         />
         <Route path="/recommend/:adventureId" element={<RecommendRoute />} />
         <Route path="/plan/:adventureId" element={<PlanRoute />} />
+        <Route path="/plan/:adventureId/edit" element={<EditPlanRoute />} />
         <Route path="*" element={<Redirect to="/" />} />
       </Routes>
     </main>
